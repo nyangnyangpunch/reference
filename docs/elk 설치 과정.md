@@ -61,9 +61,12 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml
 kubectl get nodes
-
+```
+not Ready일 시
+```
 sudo snap install kops
 ```
+
 슬레이브 노드 추가
 ```
 sudo kubeadm join 172.31.20.231:6443 --token 95bt0c.dqi8yv7xzhbqgwcp --discovery-token-ca-cert-hash sha256:b2c7c12685340f8782013b2fe0c1521c74f02994b9f15a068f13a38a39c114c0
@@ -93,6 +96,23 @@ https://도메인/api/v1/namespaces/kube-system/services/https:kubernetes-dashbo
 
 kubectl -n kube-system describe $(kubectl -n kube-system \
     get secret -n kube-system -o name | grep namespace) | grep token
+```
+
+istio install
+```
+curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.2 sh -
+cd istio-1.2.2
+export PATH=$PWD/bin:$PATH
+for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
+kubectl get svc -n istio-system
+kubectl get pods -n istio-system
+```
+deploy application할 때 istio 이용
+```
+kubectl label namespace <namespace> istio-injection=enabled
+kubectl create -n <namespace> -f <your-app-spec>.yaml
+
+istioctl kube-inject -f <your-app-spec>.yaml | kubectl apply -f -
 ```
 
 elk 다음 주소 참조
