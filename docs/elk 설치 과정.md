@@ -137,3 +137,5 @@ istioctl kube-inject -f <your-app-spec>.yaml | kubectl apply -f -
 
 elk 다음 주소 참조
 https://github.com/pires/kubernetes-elk-cluster
+https://github.com/kayrus/elk-kubernetes
+https://github.com/neogenix/k8s-elk
