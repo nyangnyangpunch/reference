@@ -24,6 +24,10 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 apt-cache madison docker-ce
 
 sudo docker run hello-world
+
+sudo usermod -a -G docker $USER
+sudo service docker restart
+로그아웃 후 재시작
 ```
 
 dpkg frontend lock 해제
@@ -65,6 +69,13 @@ kubectl get nodes
 not Ready일 시
 ```
 sudo snap install kops
+
+sudo -i
+swapoff -a
+exit
+strace -eopenat kubectl version
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
 슬레이브 노드 추가
@@ -74,10 +85,13 @@ kubectl get nodes
 ```
 dashboard
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
 kubectl get pods --all-namespaces
 kubectl -n kube-system get service kubernetes-dashboard
 kubectl proxy --accept-hosts='^*
+
+kubectl proxy
+
 ```
 웹서버 프록시 설정
 ```
@@ -87,6 +101,9 @@ sudo a2enmod proxy
 sudo a2enmod proxy_html
 sudo a2enmod proxy_http
 sudo a2enmod rewrite
+
+설정파일
+
 sudo service apache2 restart
 ```
 dashboard 접속
@@ -96,6 +113,7 @@ https://도메인/api/v1/namespaces/kube-system/services/https:kubernetes-dashbo
 
 kubectl -n kube-system describe $(kubectl -n kube-system \
     get secret -n kube-system -o name | grep namespace) | grep token
+토큰으로 접속가능
 ```
 
 istio install
@@ -104,7 +122,9 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.2 sh -
 cd istio-1.2.2
 export PATH=$PWD/bin:$PATH
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
-kubectl get svc -n istio-system
+
+kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+kubectl get service -n istio-system
 kubectl get pods -n istio-system
 ```
 deploy application할 때 istio 이용
