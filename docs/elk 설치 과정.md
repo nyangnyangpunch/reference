@@ -139,3 +139,10 @@ elk 다음 주소 참조
 https://github.com/pires/kubernetes-elk-cluster
 https://github.com/kayrus/elk-kubernetes
 https://github.com/neogenix/k8s-elk
+
+elastic search pulling image
+```
+docker pull docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+docker pull docker.elastic.co/kibana/kibana:7.2.0
+docker pull docker.elastic.co/logstash/logstash:7.2.0
+docker pull docker.elastic.co/beats/filebeat:7.2.0
