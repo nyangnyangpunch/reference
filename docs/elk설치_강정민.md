@@ -55,3 +55,9 @@ sudo dpkg -i elasticsearch-7.2.0-amd64.deb
 
 
 링크 참조-> https://www.elastic.co/guide/en/elasticsearch/reference/7.2/deb.html#deb
+
+
+ELK stack 활용
+=============
+
+https://www.youtube.com/watch?v=B1Aq2GQ4E78&list=PLVNY1HnUlO24LCsgOxR_eK2Yi4sOgH9Pg&index=3
